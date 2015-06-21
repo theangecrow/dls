@@ -1,0 +1,16 @@
+div.menu{
+    position:fixed;
+    left:20px;
+    top:50%;
+    border:1px solid black;
+    width:120px;
+}
+
+div.admin{
+    position:fixed;
+    right: 20px;
+    background: #F7F5E5;
+    border: 1px solid #B56B26;
+    width: 1000px;
+    height: 3000px;
+}

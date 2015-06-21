@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head> <h:outputStylesheet library="css" name="adminstyle.css" rendered="true" /></h:head>
+<f:view>
+    <h:body rendered="#{userLogin.roleUser.roleUserValue==0}">
+    <div class="menu">
+        <h:form>
+            <h:commandLink value="Группы" action="student"/><br/>
+            <h:commandLink value="Предметы" action="#{adminStudyBean.AllTeacherGet1}"/><br/>
+            <h:commandButton value="Выход" action="#{userLogin.logout}"/>
+        </h:form>
+    </div>
+    <div class="admin">
+        <h1>Редактирование групп</h1><br/>
+        <h:form rendered="#{not(adminStudentBean.flagEdit)}">
+        <h3>Создать новую группу.</h3><br/>
+            <h4>Название</h4><h:inputText value="#{adminStudentBean.newGroupName}" />
+            <h:commandButton value="Добавить группу" action="#{adminStudentBean.createStudentGroup}"/><br/>
+        </h:form>
+        <h:form rendered="#{(adminStudentBean.studentsGroups!=null)and(not(adminStudentBean.flagEdit))}">
+            <h4>Изменение групп</h4>
+            <h:selectOneMenu value="#{adminStudentBean.groupChoice}">
+                    <f:selectItems value="#{adminStudentBean.studentsGroups}" var="group" itemLabel="${group.name}"
+                                   itemValue="${group.id}" />
+            </h:selectOneMenu>
+            <h:commandButton action="#{adminStudentBean.deleteStudentGroup}" value="Удалить Группу"/><br/>
+            <h:commandButton action="#{adminStudentBean.startEditGroup}" value="Редактировать Группу"/>
+        </h:form>
+
+
+
+
+        <h:form rendered="#{adminStudentBean.flagEdit}">
+            Поле для смена названия группы<h:inputText value="#{adminStudentBean.editGroupName}"/><br/>
+            <h:selectOneListbox value="#{adminStudentBean.idStrudentInGroup}">
+                <f:selectItems value="#{adminStudentBean.usersInGroup}" var="user"
+                        itemValue="${user.id}" itemLabel="${user.firstName} ${user.lastName}"/>
+            </h:selectOneListbox>
+            <h:commandButton value="Удалить" action="#{adminStudentBean.deleteUserOfGroup}"/>
+            <h:commandButton value="Добавить" action="#{adminStudentBean.addUserToGroup}"/>
+            <h:selectOneListbox value="#{adminStudentBean.idStudentOutOfGroup}">
+                <f:selectItems value="#{adminStudentBean.usersOutOfGroup}" var="user"
+                               itemValue="${user.id}" itemLabel="${user.firstName} ${user.lastName}"/>
+            </h:selectOneListbox><br/>
+            <h:commandButton value="Сменить имя Группы и Закрыть меню редактирования" action="#{adminStudentBean.saveNewNameGroup}"/>
+        </h:form>
+    </div>
+    </h:body>
+</f:view>
+</html>
